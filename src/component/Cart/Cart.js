@@ -1,5 +1,6 @@
 import React from 'react';
 import './Cart.css'
+import { Link } from 'react-router-dom';
 const Cart = (props) => {
     const addedProduct = props.item;
     let total = 0;
@@ -8,7 +9,7 @@ const Cart = (props) => {
         total = total + product.price;
     }
     let shipping = 0;
-    if(total == 0){
+    if(total === 0){
         shipping = 0;
     }else{
         shipping = total/20 ;
@@ -47,7 +48,7 @@ const Cart = (props) => {
                     </tr>
                 </tbody>
             </table>
-            <button className="review-btn">Review your order</button>
+            <Link to="/review"><button className="review-btn">Review your order</button></Link>
         </div>
     );
 };
