@@ -6,7 +6,6 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
 } from "react-router-dom";
 import Review from './component/Review/Review';
 import Notfound from './component/Notfound/Notfound';

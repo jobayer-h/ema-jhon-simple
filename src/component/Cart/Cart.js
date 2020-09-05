@@ -1,12 +1,11 @@
 import React from 'react';
-import './Cart.css'
-import { Link } from 'react-router-dom';
+import './Cart.css';
 const Cart = (props) => {
     const addedProduct = props.item;
     let total = 0;
     for (let i = 0; i < addedProduct.length; i++) {
         const product = addedProduct[i];
-        total = total + product.price;
+        total = total + product.price * product.quantity;
     }
     let shipping = 0;
     if(total === 0){
@@ -22,7 +21,7 @@ const Cart = (props) => {
         return Number(num.toFixed(2));
     }
     return (
-        <div>
+        <div className="flex-cart">
             <p>Item Ordered : {addedProduct.length}</p>
             <table>
                 <tbody>
@@ -48,7 +47,9 @@ const Cart = (props) => {
                     </tr>
                 </tbody>
             </table>
-            <Link to="/review"><button className="review-btn">Review your order</button></Link>
+            {
+                props.children
+            }
         </div>
     );
 };
