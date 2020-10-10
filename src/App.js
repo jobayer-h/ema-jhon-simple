@@ -1,4 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
+import * as firebase from "firebase/app";
+import "firebase/auth";
+import firebaseConfig from "./firebase-config"
 import './App.css';
 import Header from './component/Header/Header';
 import Shop from './component/Shop/Shop';
@@ -10,13 +13,38 @@ import {
 import Review from './component/Review/Review';
 import Notfound from './component/Notfound/Notfound';
 import ProductDetail from './component/ProductDetail/ProductDetail';
-
+import { createContext } from 'react';
+export const Usercontext = createContext();
+firebase.initializeApp(firebaseConfig);
 
 function App() {
+  const provider = new firebase.auth.GoogleAuthProvider();
+
+  
+
+  const [signInUser, setSingnInUser] = useState({});
+
+  const handleGoogleSignIn = () => {
+    firebase.auth().signInWithPopup(provider).then(function(result) {
+      const {displayName, email} = result.user;
+
+      const user = {
+        name: displayName,
+        email: email
+      }
+      setSingnInUser(user);
+    }).catch(function(error) {
+      var errorMessage = error.message;
+      alert(errorMessage)      
+    });
+  }
+
   return (
+    <Usercontext.Provider value={[signInUser, setSingnInUser]}>
     <Router>
       <div className="App">
       <Header></Header>
+      <button onClick={handleGoogleSignIn}>Sign in</button>
       <Switch>
         <Route path="/shop">
           <Shop></Shop>
@@ -39,6 +67,8 @@ function App() {
       </Switch>
       </div>
     </Router>
+
+    </Usercontext.Provider>
   );
 }
 
