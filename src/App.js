@@ -20,53 +20,50 @@ firebase.initializeApp(firebaseConfig);
 function App() {
   const provider = new firebase.auth.GoogleAuthProvider();
 
-  
-
   const [signInUser, setSingnInUser] = useState({});
 
   const handleGoogleSignIn = () => {
-    firebase.auth().signInWithPopup(provider).then(function(result) {
-      const {displayName, email} = result.user;
+    firebase.auth().signInWithPopup(provider).then(function (result) {
+      const { displayName, email } = result.user;
 
       const user = {
         name: displayName,
         email: email
       }
       setSingnInUser(user);
-    }).catch(function(error) {
+    }).catch(function (error) {
       var errorMessage = error.message;
-      alert(errorMessage)      
+      alert(errorMessage)
     });
   }
 
   return (
     <Usercontext.Provider value={[signInUser, setSingnInUser]}>
-    <Router>
-      <div className="App">
-      <Header></Header>
-      <button onClick={handleGoogleSignIn}>Sign in</button>
-      <Switch>
-        <Route path="/shop">
-          <Shop></Shop>
-        </Route>
-        <Route path="/review">
-          <Review></Review>
-        </Route>
-        <Route path="/manage">
-          <h1>Comming soooon...!</h1>
-        </Route>
-        <Route exact path="/">
-          <Shop></Shop>
-        </Route>
-        <Route path="/product/:productKey">
-          <ProductDetail></ProductDetail>
-        </Route>
-        <Route path="*">
-          <Notfound></Notfound>
-        </Route>
-      </Switch>
-      </div>
-    </Router>
+      <Router>
+        <div className="App">
+          <Header login={handleGoogleSignIn}></Header>
+          <Switch>
+            <Route path="/shop">
+              <Shop></Shop>
+            </Route>
+            <Route path="/review">
+              <Review></Review>
+            </Route>
+            <Route path="/manage">
+              <h1>Comming soooon...!</h1>
+            </Route>
+            <Route exact path="/">
+              <Shop></Shop>
+            </Route>
+            <Route path="/product/:productKey">
+              <ProductDetail></ProductDetail>
+            </Route>
+            <Route path="*">
+              <Notfound></Notfound>
+            </Route>
+          </Switch>
+        </div>
+      </Router>
 
     </Usercontext.Provider>
   );

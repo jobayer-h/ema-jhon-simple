@@ -6,6 +6,7 @@ import Cart from '../Cart/Cart';
 import { addToDatabaseCart, getDatabaseCart } from '../../utilities/databaseManager';
 import { Link } from 'react-router-dom';
 const Shop = () => {
+    // eslint-disable-next-line
     const [product, setProduct] = useState(fakeData);
     const [cart, setCart] = useState([]);
 
